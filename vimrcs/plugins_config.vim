@@ -9,10 +9,25 @@
 " => Load pathogen paths
 """"""""""""""""""""""""""""""
 let s:vim_runtime = expand('<sfile>:p:h')."/.."
-call pathogen#infect(s:vim_runtime.'/sources_forked/{}')
-call pathogen#infect(s:vim_runtime.'/sources_non_forked/{}')
-call pathogen#infect(s:vim_runtime.'/my_plugins/{}')
+call pathogen#infect(s:vim_runtime.'/bundle/{}')
 call pathogen#helptags()
+
+""""""""""""""""""""""""""""""
+" => YouCompleteMe plugin
+""""""""""""""""""""""""""""""
+let g:ycm_use_clangd = 0
+" let g:ycm_python_interpreter_path = ''
+" let g:ycm_python_sys_path = []
+" let g:ycm_extra_conf_vim_data = [
+"   \  'g:ycm_python_interpreter_path',
+"   \  'g:ycm_python_sys_path'
+"   \]
+" let g:ycm_global_ycm_extra_conf = '~/.global_extra_conf.py'
+"
+" Let clangd fully control code completion
+" let g:ycm_clangd_uses_ycmd_caching = 0
+" Use installed clangd, not YCM-bundled clangd which doesn't get updates.
+" let g:ycm_clangd_binary_path = exepath("clangd")
 
 """"""""""""""""""""""""""""""
 " => bufExplorer plugin
@@ -45,7 +60,7 @@ nmap <c-n> <Plug>yankstack_substitute_newer_paste
 """"""""""""""""""""""""""""""
 let g:ctrlp_working_path_mode = 0
 
-let g:ctrlp_map = '<c-f>'
+" let g:ctrlp_map = '<c-f>'
 map <leader>j :CtrlP<cr>
 map <c-b> :CtrlPBuffer<cr>
 
@@ -78,7 +93,7 @@ set grepprg=/bin/grep\ -nH
 " => Nerd Tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:NERDTreeWinPos = "right"
-let NERDTreeShowHidden=0
+let NERDTreeShowHidden=1
 let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 let g:NERDTreeWinSize=35
 map <leader>nn :NERDTreeToggle<cr>
@@ -87,24 +102,15 @@ map <leader>nf :NERDTreeFind<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => vim-multiple-cursors
+" => vim-visual-multi
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:multi_cursor_use_default_mapping=0
-
-" Default mapping
-let g:multi_cursor_start_word_key      = '<C-s>'
-let g:multi_cursor_select_all_word_key = '<A-s>'
-let g:multi_cursor_start_key           = 'g<C-s>'
-let g:multi_cursor_select_all_key      = 'g<A-s>'
-let g:multi_cursor_next_key            = '<C-s>'
-let g:multi_cursor_prev_key            = '<C-p>'
-let g:multi_cursor_skip_key            = '<C-x>'
-let g:multi_cursor_quit_key            = '<Esc>'
-
+let g:VM_maps = {}
+let g:VM_maps['Add Cursor Down']  = '<C-j>'
+let g:VM_maps['Add Cursor Up']  = '<C-k>'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => surround.vim config
-" Annotate strings with gettext 
+" Annotate strings with gettext
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 vmap Si S(i_<esc>f)
 au FileType mako vmap Si S"i${ _(<esc>2f"a) }<esc>
@@ -113,30 +119,30 @@ au FileType mako vmap Si S"i${ _(<esc>2f"a) }<esc>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => lightline
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ }
+" let g:lightline = {
+"       \ 'colorscheme': 'wombat',
+"       \ }
 
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \   'left': [ ['mode', 'paste'],
-      \             ['fugitive', 'readonly', 'filename', 'modified'] ],
-      \   'right': [ [ 'lineinfo' ], ['percent'] ]
-      \ },
-      \ 'component': {
-      \   'readonly': '%{&filetype=="help"?"":&readonly?"🔒":""}',
-      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
-      \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
-      \ },
-      \ 'component_visible_condition': {
-      \   'readonly': '(&filetype!="help"&& &readonly)',
-      \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
-      \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
-      \ },
-      \ 'separator': { 'left': ' ', 'right': ' ' },
-      \ 'subseparator': { 'left': ' ', 'right': ' ' }
-      \ }
+" let g:lightline = {
+"       \ 'colorscheme': 'wombat',
+"       \ 'active': {
+"       \   'left': [ ['mode', 'paste'],
+"       \             ['fugitive', 'readonly', 'filename', 'modified'] ],
+"       \   'right': [ [ 'lineinfo' ], ['percent'] ]
+"       \ },
+"       \ 'component': {
+"       \   'readonly': '%{&filetype=="help"?"":&readonly?"🔒":""}',
+"       \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
+"       \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+"       \ },
+"       \ 'component_visible_condition': {
+"       \   'readonly': '(&filetype!="help"&& &readonly)',
+"       \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
+"       \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
+"       \ },
+"       \ 'separator': { 'left': ' ', 'right': ' ' },
+"       \ 'subseparator': { 'left': ' ', 'right': ' ' }
+"       \ }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vimroom
